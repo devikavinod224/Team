@@ -455,17 +455,33 @@ h1 {
 
 @media (max-width: 768px) {
     .nav-container {
-        padding: 0 20px;
-        height: 60px;
+        padding: 0 15px;
+        height: 65px;
     }
     .brand {
-        font-size: 1.1rem;
+        font-size: 0.95rem;
+        gap: 8px;
+    }
+    .logo-icon {
+        height: 16px;
+        width: 16px;
     }
     .nav-links {
-        gap: 15px;
+        gap: 12px;
     }
     .nav-link {
-        font-size: 0.75rem;
+        font-size: 0.7rem;
+        letter-spacing: 0.5px;
+    }
+}
+
+@media (max-width: 400px) {
+    .brand-name {
+        display: none; /* Hide 'PROFILE PAGE' text on tiny screens to save space */
+    }
+    .logo-icon {
+        height: 22px;
+        width: 22px;
     }
 }
 
