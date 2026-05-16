@@ -1,7 +1,7 @@
 // Canva API Configuration
 const API_BASE_URL = 'https://spotify-canva.vercel.app';
-// Professional CORS Proxy for local development
-const PROXY_URL = 'https://api.codetabs.com/v1/proxy?quest=';
+// Ultra-fast proxy for local development
+const PROXY_URL = 'https://corsproxy.io/?';
 
 let currentTrackId = '6Uj1ctrBOjOas8xZXGqKk4';
 let activeSnippetLang = 'curl';
@@ -45,7 +45,7 @@ axios.get('${API_BASE_URL}/api/canvas', {
 });`
 };
 
-// Selectors
+// UI Selectors
 const elTrackInput = document.getElementById('track-id-input');
 const elBtnFetch = document.getElementById('btn-fetch');
 const elLiveUrlDisplay = document.getElementById('live-url-display');
@@ -77,8 +77,9 @@ document.addEventListener('DOMContentLoaded', () => {
         updateInteractiveElements();
     });
     
-    elBtnFetch.addEventListener('click', fetchCanvasData);
-    fetchCanvasData();
+    elBtnFetch.addEventListener('click', () => fetchCanvasData(true));
+    // Initial load
+    fetchCanvasData(false);
 });
 
 function syntaxHighlight(json) {
@@ -204,7 +205,7 @@ function setupPresetChips() {
             elTrackInput.value = id;
             currentTrackId = id;
             updateInteractiveElements();
-            fetchCanvasData();
+            fetchCanvasData(true);
         });
     });
 }
@@ -251,10 +252,10 @@ function setupPlayerLogic() {
     });
 }
 
-async function fetchCanvasData() {
+async function fetchCanvasData(isManual = false) {
     const trackVal = elTrackInput.value.trim();
     if (!trackVal) {
-        showToast('Enter a track ID', false);
+        if (isManual) showToast('Enter a track ID', false);
         return;
     }
     
@@ -265,18 +266,18 @@ async function fetchCanvasData() {
     elBtnFetch.disabled = true;
     elBtnFetch.querySelector('.btn-text').textContent = 'Fetching...';
     elBtnFetch.querySelector('.spinner').classList.remove('hidden');
-    elJsonOutputBlock.textContent = 'Searching...';
+    elJsonOutputBlock.textContent = 'Searching Spotify...';
     
     try {
         let queryUrl = `${API_BASE_URL}/api/canvas?trackId=${currentTrackId}`;
         
-        // Use a high-speed proxy for local dev
-        if (window.location.hostname === 'localhost') {
+        // Apply CORS Proxy for local development
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
             queryUrl = PROXY_URL + encodeURIComponent(queryUrl);
         }
         
         const response = await fetch(queryUrl);
-        if (!response.ok) throw new Error('API server is temporarily unavailable');
+        if (!response.ok) throw new Error('Spotify API temporarily unreachable');
         
         const payload = await response.json();
         lastFetchedData = payload;
@@ -298,20 +299,21 @@ async function fetchCanvasData() {
             elPlayerArtistName.textContent = (canvasObj.artist && canvasObj.artist.artistName) ? canvasObj.artist.artistName : (trackInfoMap[currentTrackId] ? trackInfoMap[currentTrackId].artist : 'Artist');
             elPlayerTrackName.textContent = trackInfoMap[currentTrackId] ? trackInfoMap[currentTrackId].title : 'Spotify Track';
             
-            showToast('Success!');
+            if (isManual) showToast('Canvas updated!');
         } else {
             throw new Error('No Canvas for this track');
         }
         
     } catch (error) {
+        console.error('Fetch error:', error);
         elJsonOutputBlock.innerHTML = syntaxHighlight({ error: error.message });
         elPlayerVideo.src = '';
         elPlayerVideo.classList.add('hidden');
         elVideoErrorPlaceholder.classList.remove('hidden');
         elPlayerTrackName.textContent = 'Error';
-        elPlayerArtistName.textContent = 'Failed';
+        elPlayerArtistName.textContent = 'Fetch Failed';
         elIphoneMockup.classList.add('paused');
-        showToast(error.message, false);
+        if (isManual) showToast(error.message, false);
     } finally {
         elBtnFetch.disabled = false;
         elBtnFetch.querySelector('.btn-text').textContent = 'Fetch Canvas';
