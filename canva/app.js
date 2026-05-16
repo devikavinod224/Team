@@ -1,6 +1,7 @@
-// State and Constants
+// Canva API Configuration
 const API_BASE_URL = 'https://spotify-canva.vercel.app';
-const PROXY_URL = 'https://api.allorigins.win/raw?url=';
+// Professional CORS Proxy for local development
+const PROXY_URL = 'https://api.codetabs.com/v1/proxy?quest=';
 
 let currentTrackId = '6Uj1ctrBOjOas8xZXGqKk4';
 let activeSnippetLang = 'curl';
@@ -44,7 +45,7 @@ axios.get('${API_BASE_URL}/api/canvas', {
 });`
 };
 
-// UI Selectors
+// Selectors
 const elTrackInput = document.getElementById('track-id-input');
 const elBtnFetch = document.getElementById('btn-fetch');
 const elLiveUrlDisplay = document.getElementById('live-url-display');
@@ -123,12 +124,12 @@ function copyTextToClipboard(text, successMsg) {
             document.execCommand('copy');
             showToast(successMsg);
         } catch (err) {
-            showToast('Fallback copy failed', false);
+            showToast('Copy failed', false);
         }
         document.body.removeChild(textArea);
         return;
     }
-    navigator.clipboard.writeText(text).then(() => showToast(successMsg)).catch(() => showToast('Copying failed', false));
+    navigator.clipboard.writeText(text).then(() => showToast(successMsg)).catch(() => showToast('Copy failed', false));
 }
 
 function updateInteractiveElements() {
@@ -211,24 +212,24 @@ function setupPresetChips() {
 function setupCopyHandlers() {
     elBtnCopyUrl.addEventListener('click', () => {
         const urlStr = `${API_BASE_URL}/api/canvas?trackId=${currentTrackId}`;
-        copyTextToClipboard(urlStr, 'API Request URL copied!');
+        copyTextToClipboard(urlStr, 'URL copied!');
     });
 
     elBtnCopySnippet.addEventListener('click', () => {
-        copyTextToClipboard(elSnippetCodeBlock.textContent, 'Code snippet copied!');
+        copyTextToClipboard(elSnippetCodeBlock.textContent, 'Snippet copied!');
     });
 
     elBtnCopyJson.addEventListener('click', () => {
         if (!lastFetchedData) {
-            showToast('No JSON response to copy', false);
+            showToast('No JSON response', false);
             return;
         }
-        copyTextToClipboard(JSON.stringify(lastFetchedData, null, 2), 'Response JSON copied!');
+        copyTextToClipboard(JSON.stringify(lastFetchedData, null, 2), 'JSON copied!');
     });
 
     document.querySelectorAll('.btn-copy-box').forEach(btn => {
         btn.addEventListener('click', () => {
-            copyTextToClipboard(btn.getAttribute('data-copy'), 'Copied successfully!');
+            copyTextToClipboard(btn.getAttribute('data-copy'), 'Copied!');
         });
     });
 }
@@ -240,7 +241,7 @@ function setupPlayerLogic() {
                 elIphoneMockup.classList.remove('paused');
                 elPlayerPlayBtn.innerHTML = '<i data-lucide="pause"></i>';
                 lucide.createIcons();
-            }).catch(() => showToast('Failed to resume canvas', false));
+            }).catch(() => showToast('Failed to resume', false));
         } else {
             elPlayerVideo.pause();
             elIphoneMockup.classList.add('paused');
@@ -253,7 +254,7 @@ function setupPlayerLogic() {
 async function fetchCanvasData() {
     const trackVal = elTrackInput.value.trim();
     if (!trackVal) {
-        showToast('Please enter a track ID or URI', false);
+        showToast('Enter a track ID', false);
         return;
     }
     
@@ -264,21 +265,18 @@ async function fetchCanvasData() {
     elBtnFetch.disabled = true;
     elBtnFetch.querySelector('.btn-text').textContent = 'Fetching...';
     elBtnFetch.querySelector('.spinner').classList.remove('hidden');
-    elJsonOutputBlock.textContent = 'Contacting server microservices...';
+    elJsonOutputBlock.textContent = 'Searching...';
     
     try {
         let queryUrl = `${API_BASE_URL}/api/canvas?trackId=${currentTrackId}`;
         
-        // Apply CORS Proxy for local development
+        // Use a high-speed proxy for local dev
         if (window.location.hostname === 'localhost') {
             queryUrl = PROXY_URL + encodeURIComponent(queryUrl);
         }
         
         const response = await fetch(queryUrl);
-        if (!response.ok) {
-            const errorPayload = await response.json().catch(() => ({}));
-            throw new Error(errorPayload.error || `HTTP error! Status: ${response.status}`);
-        }
+        if (!response.ok) throw new Error('API server is temporarily unavailable');
         
         const payload = await response.json();
         lastFetchedData = payload;
@@ -297,30 +295,23 @@ async function fetchCanvasData() {
             }).catch(() => {});
             
             const canvasObj = canvasList[0];
-            if (canvasObj.artist && canvasObj.artist.artistName) {
-                elPlayerArtistName.textContent = canvasObj.artist.artistName;
-                const fallbackInfo = trackInfoMap[currentTrackId];
-                elPlayerTrackName.textContent = fallbackInfo ? fallbackInfo.title : 'Spotify Track';
-            } else {
-                const fallbackInfo = trackInfoMap[currentTrackId];
-                elPlayerTrackName.textContent = fallbackInfo ? fallbackInfo.title : 'Spotify Track';
-                elPlayerArtistName.textContent = fallbackInfo ? fallbackInfo.artist : 'Unknown Artist';
-            }
-            showToast('Canvas fetched successfully!');
+            elPlayerArtistName.textContent = (canvasObj.artist && canvasObj.artist.artistName) ? canvasObj.artist.artistName : (trackInfoMap[currentTrackId] ? trackInfoMap[currentTrackId].artist : 'Artist');
+            elPlayerTrackName.textContent = trackInfoMap[currentTrackId] ? trackInfoMap[currentTrackId].title : 'Spotify Track';
+            
+            showToast('Success!');
         } else {
-            throw new Error('No Canvas available for this track');
+            throw new Error('No Canvas for this track');
         }
         
     } catch (error) {
-        console.error('API Fetch failed:', error);
-        elJsonOutputBlock.innerHTML = syntaxHighlight({ error: error.message || 'Unknown network error' });
+        elJsonOutputBlock.innerHTML = syntaxHighlight({ error: error.message });
         elPlayerVideo.src = '';
         elPlayerVideo.classList.add('hidden');
         elVideoErrorPlaceholder.classList.remove('hidden');
         elPlayerTrackName.textContent = 'Error';
-        elPlayerArtistName.textContent = 'Fetch Failed';
+        elPlayerArtistName.textContent = 'Failed';
         elIphoneMockup.classList.add('paused');
-        showToast(`Fetch failed: ${error.message}`, false);
+        showToast(error.message, false);
     } finally {
         elBtnFetch.disabled = false;
         elBtnFetch.querySelector('.btn-text').textContent = 'Fetch Canvas';
