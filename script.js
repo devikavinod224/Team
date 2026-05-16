@@ -18,6 +18,11 @@ class LoginApp {
         this.videoToggle.addEventListener('click', () => this.toggleVideo());
         lucide.createIcons();
         
+        // Force play video on load
+        this.bgVideo.play().catch(err => {
+            console.log("Autoplay was prevented by browser, waiting for interaction.");
+        });
+
         this.usernameInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') this.handleLogin();
         });
