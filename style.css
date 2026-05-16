@@ -259,46 +259,38 @@ h1 {
     color: transparent;
 }
 
-/* Floating Input Hint */
+/* Floating Input Hint (Bottom of Page) */
 .input-hint-floating {
-    position: absolute;
-    bottom: -45px;
-    right: 0px;
+    margin-top: 30px;
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 8px 14px;
-    border-radius: 12px;
+    padding: 12px 24px;
+    border-radius: 100px;
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 0.75rem;
+    justify-content: center;
+    gap: 12px;
+    font-size: 0.85rem;
     color: var(--text-dim);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
     animation: floatHint 4s ease-in-out infinite;
-    pointer-events: none;
-    white-space: nowrap;
-    z-index: 10;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    border-left: 4px solid var(--primary);
 }
 
 .input-hint-floating i {
-    width: 14px;
-    height: 14px;
+    width: 18px;
+    height: 18px;
     color: var(--primary);
 }
 
-.input-hint-floating::after {
-    content: '';
-    position: absolute;
-    top: -6px;
-    left: 20px;
-    width: 10px;
-    height: 10px;
-    background: inherit;
-    border-left: 1px solid rgba(255, 255, 255, 0.1);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    transform: rotate(45deg);
+@keyframes floatHint {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
 }
 
 @keyframes floatHint {
