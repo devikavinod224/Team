@@ -259,6 +259,59 @@ h1 {
     color: transparent;
 }
 
+/* Floating Input Hint */
+.input-hint-floating {
+    position: absolute;
+    top: -50px;
+    right: -10px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 14px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    animation: floatHint 4s ease-in-out infinite;
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+.input-hint-floating i {
+    width: 14px;
+    height: 14px;
+    color: var(--primary);
+}
+
+.input-hint-floating::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 20px;
+    width: 10px;
+    height: 10px;
+    background: inherit;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transform: rotate(45deg);
+}
+
+@keyframes floatHint {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-8px) translateX(3px); }
+}
+
+.input-group input:focus ~ .input-hint-floating {
+    opacity: 0.4;
+    filter: blur(2px);
+    transition: all 0.5s ease;
+}
+
 /* Login Button */
 .login-btn {
     width: 100%;
