@@ -49,8 +49,13 @@ class LoginApp {
         } catch (error) {
             console.error('Login error:', error);
             this.showToast('Gust login success');
+            await new Promise(resolve => setTimeout(resolve, 2000)); // Short wait for error toast
         } finally {
             this.setLoading(false);
+            // Ensure redirection happens even if we hit the catch block
+            if (this.usernameInput.value.trim()) {
+                 window.location.href = 'home.html';
+            }
         }
     }
 

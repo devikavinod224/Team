@@ -59,15 +59,15 @@ class LoginApp {
             // Wait for the remainder of the 5 seconds if fetch was fast
             await delayPromise;
 
-            // Redirect after a short delay
-            setTimeout(() => {
-                window.location.href = 'home.html';
-            }, 1000);
         } catch (error) {
             console.error('Login error:', error);
-            this.showToast('Gust login success'); // Fallback to Guest on error
+            this.showToast('Gust login success');
+            await new Promise(resolve => setTimeout(resolve, 2000));
         } finally {
             this.setLoading(false);
+            if (this.usernameInput.value.trim()) {
+                window.location.href = 'home.html';
+            }
         }
     }
 
