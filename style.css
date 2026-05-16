@@ -453,6 +453,22 @@ h1 {
     justify-content: space-between;
 }
 
+@media (max-width: 768px) {
+    .nav-container {
+        padding: 0 20px;
+        height: 60px;
+    }
+    .brand {
+        font-size: 1.1rem;
+    }
+    .nav-links {
+        gap: 15px;
+    }
+    .nav-link {
+        font-size: 0.75rem;
+    }
+}
+
 .brand {
     display: flex;
     align-items: center;
@@ -533,6 +549,14 @@ h1 {
     letter-spacing: 10px;
 }
 
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 2.2rem;
+        letter-spacing: 4px;
+        margin-bottom: 30px;
+    }
+}
+
 .team-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -553,8 +577,29 @@ h1 {
 }
 
 @media (max-width: 768px) {
+    .content-wrapper {
+        margin-top: 80px;
+        padding: 20px 10px;
+    }
+    .glass-card {
+        padding: 25px 20px;
+    }
+    .input-hint-floating {
+        font-size: 0.7rem;
+        padding: 8px 16px;
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
     .section-title {
-        font-size: 2.5rem;
+        font-size: 1.8rem;
+    }
+    .dev-card {
+        padding: 30px 20px;
+    }
+    .dev-name {
+        font-size: 1.25rem;
     }
 }
 
