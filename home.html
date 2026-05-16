@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team | Premium Experience</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body class="home-page">
+    <div class="vignette"></div>
+
+    <nav class="top-nav">
+        <div class="nav-logo">PROFILE PAGE</div>
+        <ul class="nav-links">
+            <li><a href="#team" class="active">Developer Team</a></li>
+            <li><a href="canva.html">Canva API</a></li>
+            <li><a href="#about">About</a></li>
+        </ul>
+    </nav>
+
+    <main class="content-wrapper">
+        <section id="team" class="team-section">
+            <h1 class="section-title">TEAM</h1>
+            <div class="team-grid">
+                <!-- Card 1 -->
+                <div class="team-card" data-username="devikavinod224">
+                    <div class="card-inner">
+                        <div class="profile-ring">
+                            <div class="profile-inner">
+                                <img src="https://github.com/devikavinod224.png" alt="Devika Vinod">
+                            </div>
+                        </div>
+                        <h3>Devika Vinod</h3>
+                        <p class="role">Lead Developer</p>
+                        <a href="https://github.com/devikavinod224" target="_blank" class="redirect-btn">
+                            <span>Redirect</span>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="team-card" data-username="tresamariaroy-afk">
+                    <div class="card-inner">
+                        <div class="profile-ring">
+                            <div class="profile-inner">
+                                <img src="https://github.com/tresamariaroy-afk.png" alt="Tresa Maria Roy">
+                            </div>
+                        </div>
+                        <h3>Tresa Maria Roy</h3>
+                        <p class="role">UI/UX Designer</p>
+                        <a href="https://github.com/tresamariaroy-afk" target="_blank" class="redirect-btn">
+                            <span>Redirect</span>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="team-card" data-username="navamiraj264">
+                    <div class="card-inner">
+                        <div class="profile-ring">
+                            <div class="profile-inner">
+                                <img src="https://github.com/navamiraj264.png" alt="Navami Raj">
+                            </div>
+                        </div>
+                        <h3>Navami Raj</h3>
+                        <p class="role">Full Stack Dev</p>
+                        <a href="https://github.com/navamiraj264" target="_blank" class="redirect-btn">
+                            <span>Redirect</span>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about-section">
+            <h2 class="section-title">About</h2>
+            <div class="glass-card">
+                <p>We are a dedicated team of developers and designers focused on creating premium digital experiences with cutting-edge technologies.</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        // Simple tilt effect for cards
+        document.querySelectorAll('.team-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)`;
+            });
+        });
+    </script>
+</body>
+</html>
