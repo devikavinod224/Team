@@ -13,11 +13,11 @@
 <body>
     <video autoplay muted loop id="bgVideo" class="background-video">
         <source src="assets/video.mp4" type="video/mp4">
-        Your browser does not support the video tag.
     </video>
+    
     <div class="vignette"></div>
 
-    <button id="videoToggle" class="video-control-btn glass-card" title="Toggle Background Video">
+    <button id="videoToggle" class="video-control-btn" title="Toggle Video">
         <i data-lucide="pause"></i>
     </button>
 
@@ -54,11 +54,12 @@
                     </div>
                     <div class="status-indicator">
                         <span class="dot"></span>
-                        <span class="status-text">Systems Active</span>
+                        <span class="status-text">Active</span>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="input-hint-floating">
             <i data-lucide="info"></i>
             <span>Tip: Use GitHub username for your profile, or any name for Guest mode!</span>
@@ -69,7 +70,6 @@
 
     <script src="script.js"></script>
     <script>
-        // Initialize icons
         lucide.createIcons();
     </script>
 </body>

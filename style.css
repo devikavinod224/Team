@@ -32,7 +32,6 @@ body {
     color: var(--text-main);
 }
 
-/* Background Video */
 .background-video {
     position: fixed;
     top: 0;
@@ -44,7 +43,6 @@ body {
     filter: brightness(0.85);
 }
 
-/* Vignette Overlay */
 .vignette {
     position: fixed;
     top: 0;
@@ -56,7 +54,6 @@ body {
     background: radial-gradient(circle, transparent 40%, rgba(0, 0, 0, 0.7) 100%);
 }
 
-/* Video Controls */
 .video-control-btn {
     position: fixed;
     top: 25px;
@@ -92,7 +89,6 @@ body {
     stroke-width: 2.5px;
 }
 
-/* Login Container */
 .login-container {
     perspective: 1000px;
     width: 100%;
@@ -119,7 +115,6 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Profile Section */
 .profile-section {
     margin-bottom: 30px;
 }
@@ -173,7 +168,6 @@ body {
     transition: opacity 0.5s ease;
 }
 
-/* Input Section */
 .input-section {
     width: 100%;
     text-align: center;
@@ -259,7 +253,6 @@ h1 {
     color: transparent;
 }
 
-/* Floating Input Hint (Bottom of Page) */
 .input-hint-floating {
     margin-top: 30px;
     background: rgba(255, 255, 255, 0.05);
@@ -293,18 +286,6 @@ h1 {
     50% { transform: translateY(-10px); }
 }
 
-@keyframes floatHint {
-    0%, 100% { transform: translateY(0) translateX(0); }
-    50% { transform: translateY(-8px) translateX(3px); }
-}
-
-.input-group input:focus ~ .input-hint-floating {
-    opacity: 0.4;
-    filter: blur(2px);
-    transition: all 0.5s ease;
-}
-
-/* Login Button */
 .login-btn {
     width: 100%;
     background: var(--primary);
@@ -347,7 +328,6 @@ h1 {
     display: none;
 }
 
-/* Footer Details */
 .footer-details {
     margin-top: 35px;
     padding-top: 25px;
@@ -407,7 +387,6 @@ h1 {
     letter-spacing: 1px;
 }
 
-/* Toasts */
 .toast-container {
     position: fixed;
     bottom: 30px;
@@ -443,7 +422,6 @@ h1 {
     to { transform: translateX(100%); opacity: 0; }
 }
 
-/* Home Page Specifics */
 .home-page {
     overflow-y: auto;
     display: block;
@@ -452,7 +430,6 @@ h1 {
     background-attachment: fixed;
 }
 
-/* Premium Navbar (Integrated from Canva Portal) */
 .navbar {
     position: fixed;
     top: 0;
@@ -537,12 +514,6 @@ h1 {
     text-shadow: 0 0 10px var(--primary-glow);
 }
 
-.nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
 .content-wrapper {
     margin-top: 100px;
     padding: 40px 20px;
@@ -585,15 +556,8 @@ h1 {
     .section-title {
         font-size: 2.5rem;
     }
-    .top-nav {
-        padding: 15px 20px;
-    }
-    .nav-links {
-        gap: 15px;
-    }
 }
 
-/* Premium Developer Cards (Integrated from SpotifyCanva) */
 .dev-card {
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);

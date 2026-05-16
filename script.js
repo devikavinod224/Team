@@ -18,10 +18,7 @@ class LoginApp {
         this.videoToggle.addEventListener('click', () => this.toggleVideo());
         lucide.createIcons();
         
-        // Force play video on load
-        this.bgVideo.play().catch(err => {
-            console.log("Autoplay was prevented by browser, waiting for interaction.");
-        });
+        this.bgVideo.play().catch(() => {});
 
         this.usernameInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') this.handleLogin();
@@ -31,16 +28,12 @@ class LoginApp {
     toggleVideo() {
         if (this.bgVideo.paused) {
             this.bgVideo.play();
-            this.videoToggle.setAttribute('data-state', 'playing');
             this.videoToggle.innerHTML = '<i data-lucide="pause"></i>';
         } else {
             this.bgVideo.pause();
-            this.videoToggle.setAttribute('data-state', 'paused');
             this.videoToggle.innerHTML = '<i data-lucide="play"></i>';
         }
-        if (window.lucide) {
-            window.lucide.createIcons();
-        }
+        if (window.lucide) lucide.createIcons();
     }
 
     async handleLogin() {
@@ -53,78 +46,54 @@ class LoginApp {
         this.setLoading(true);
 
         try {
-            const delayPromise = new Promise(resolve => setTimeout(resolve, 5000));
-            
             const githubUser = await this.fetchGitHubProfile(username);
             
             if (githubUser) {
                 this.profileImage.src = githubUser.avatar_url;
-                this.showToast('You are a developer login success');
+                this.showToast('Login success');
             } else {
-                this.showToast('Gust login success');
+                this.showToast('Guest login success');
             }
             
-            await delayPromise;
-
-            // Redirect after a short delay
             setTimeout(() => {
                 window.location.href = 'home.html';
-            }, 1000);
+            }, 2000);
         } catch (error) {
-            console.error('Login error:', error);
-            this.showToast('Gust login success');
-            await new Promise(resolve => setTimeout(resolve, 2000)); // Short wait for error toast
-        } finally {
-            this.setLoading(false);
-            // Ensure redirection happens even if we hit the catch block
-            if (this.usernameInput.value.trim()) {
-                 window.location.href = 'home.html';
-            }
+            this.showToast('Login success');
+            setTimeout(() => {
+                window.location.href = 'home.html';
+            }, 2000);
         }
     }
 
     async fetchGitHubProfile(username) {
         try {
             const response = await fetch(`https://api.github.com/users/${username}`);
-            if (response.ok) {
-                return await response.json();
-            }
-            return null;
+            return response.ok ? await response.json() : null;
         } catch {
             return null;
         }
     }
 
     setLoading(isLoading) {
-        if (isLoading) {
-            this.loginBtn.disabled = true;
-            this.btnLoader.style.display = 'block';
-            this.btnText.textContent = 'Logging in...';
-            this.profileRing.classList.add('loading');
-        } else {
-            this.loginBtn.disabled = false;
-            this.btnLoader.style.display = 'none';
-            this.btnText.textContent = 'Log In';
-            this.profileRing.classList.remove('loading');
-        }
+        this.loginBtn.disabled = isLoading;
+        this.btnLoader.style.display = isLoading ? 'block' : 'none';
+        this.btnText.textContent = isLoading ? 'Logging in...' : 'Access Dashboard';
+        if (isLoading) this.profileRing.classList.add('loading');
+        else this.profileRing.classList.remove('loading');
     }
 
     showToast(message) {
         const toast = document.createElement('div');
         toast.className = 'toast';
         toast.textContent = message;
-        
         this.toastContainer.appendChild(toast);
 
         setTimeout(() => {
             toast.classList.add('fade-out');
-            setTimeout(() => {
-                toast.remove();
-            }, 300);
+            setTimeout(() => toast.remove(), 300);
         }, 3000);
     }
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-    new LoginApp();
-});
+document.addEventListener('DOMContentLoaded', () => new LoginApp());
