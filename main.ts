@@ -11,6 +11,8 @@ class LoginApp {
     private toastContainer: HTMLElement;
     private btnLoader: HTMLElement;
     private btnText: HTMLElement;
+    private videoToggle: HTMLButtonElement;
+    private bgVideo: HTMLVideoElement;
 
     constructor() {
         this.usernameInput = document.getElementById('username') as HTMLInputElement;
@@ -20,17 +22,35 @@ class LoginApp {
         this.toastContainer = document.getElementById('toastContainer') as HTMLElement;
         this.btnLoader = document.getElementById('btnLoader') as HTMLElement;
         this.btnText = document.querySelector('.btn-text') as HTMLElement;
+        this.videoToggle = document.getElementById('videoToggle') as HTMLButtonElement;
+        this.bgVideo = document.getElementById('bgVideo') as HTMLVideoElement;
 
         this.init();
     }
 
     private init() {
         this.loginBtn.addEventListener('click', () => this.handleLogin());
+        this.videoToggle.addEventListener('click', () => this.toggleVideo());
+        
+        // @ts-ignore
+        lucide.createIcons();
         
         // Allow enter key to trigger login
         this.usernameInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') this.handleLogin();
         });
+    }
+
+    private toggleVideo(): void {
+        if (this.bgVideo.paused) {
+            this.bgVideo.play();
+            this.videoToggle.innerHTML = '<i data-lucide="pause"></i>';
+        } else {
+            this.bgVideo.pause();
+            this.videoToggle.innerHTML = '<i data-lucide="play"></i>';
+        }
+        // @ts-ignore
+        lucide.createIcons();
     }
 
     private async handleLogin() {

@@ -7,16 +7,31 @@ class LoginApp {
         this.toastContainer = document.getElementById('toastContainer');
         this.btnLoader = document.getElementById('btnLoader');
         this.btnText = document.querySelector('.btn-text');
+        this.videoToggle = document.getElementById('videoToggle');
+        this.bgVideo = document.getElementById('bgVideo');
 
         this.init();
     }
 
     init() {
         this.loginBtn.addEventListener('click', () => this.handleLogin());
+        this.videoToggle.addEventListener('click', () => this.toggleVideo());
+        lucide.createIcons();
         
         this.usernameInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') this.handleLogin();
         });
+    }
+
+    toggleVideo() {
+        if (this.bgVideo.paused) {
+            this.bgVideo.play();
+            this.videoToggle.innerHTML = '<i data-lucide="pause"></i>';
+        } else {
+            this.bgVideo.pause();
+            this.videoToggle.innerHTML = '<i data-lucide="play"></i>';
+        }
+        lucide.createIcons();
     }
 
     async handleLogin() {

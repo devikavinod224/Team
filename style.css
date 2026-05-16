@@ -6,6 +6,13 @@
     --text-main: #ffffff;
     --text-dim: rgba(255, 255, 255, 0.6);
     --bg-dark: #0f172a;
+    --bg-secondary: #111114;
+    --bg-tertiary: #18181c;
+    --accent: #1DB954;
+    --accent-glow: rgba(29, 185, 84, 0.25);
+    --border-color: rgba(255, 255, 255, 0.07);
+    --border-radius-md: 14px;
+    --transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 * {
@@ -49,6 +56,34 @@ body {
     z-index: 0;
     pointer-events: none;
     background: radial-gradient(circle, transparent 40%, rgba(0, 0, 0, 0.7) 100%);
+}
+
+/* Video Controls */
+.video-control-btn {
+    position: fixed;
+    top: 25px;
+    left: 25px;
+    width: 45px;
+    height: 45px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    cursor: pointer;
+    border-radius: 12px;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.video-control-btn:hover {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.video-control-btn svg {
+    width: 20px;
+    height: 20px;
 }
 
 /* Login Container */
@@ -521,3 +556,168 @@ h1 {
         gap: 15px;
     }
 }
+
+/* Premium Developer Cards (Integrated from SpotifyCanva) */
+.dev-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    padding: 40px 32px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all var(--transition-smooth);
+    cursor: pointer;
+}
+
+.dev-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--primary);
+    box-shadow: 0 12px 40px rgba(74, 222, 128, 0.15);
+}
+
+.dev-card-glow {
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(74, 222, 128, 0.1) 0%, rgba(74, 222, 128, 0) 70%);
+    z-index: 0;
+    pointer-events: none;
+    transition: transform var(--transition-smooth);
+}
+
+.dev-card:hover .dev-card-glow {
+    transform: translateX(-50%) scale(1.5);
+}
+
+.dev-avatar-wrap {
+    width: 124px;
+    height: 124px;
+    border-radius: 50%;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 24px;
+    padding: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary) 0%, #22c55e 100%);
+    box-shadow: 0 4px 15px var(--primary-glow);
+    transition: all var(--transition-smooth);
+}
+
+.dev-card:hover .dev-avatar-wrap {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px var(--primary-glow);
+}
+
+.dev-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--bg-secondary);
+    filter: grayscale(100%);
+    transition: filter 0.4s ease;
+}
+
+.dev-card:hover .dev-avatar {
+    filter: grayscale(0%);
+}
+
+.dev-badge {
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary);
+    color: var(--bg-dark);
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: 0 4px 10px rgba(74, 222, 128, 0.3);
+}
+
+.dev-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 6px;
+    z-index: 1;
+}
+
+.dev-role {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 16px;
+    z-index: 1;
+}
+
+.dev-bio {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin-bottom: 24px;
+    z-index: 1;
+    max-width: 280px;
+}
+
+.dev-tags {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 24px;
+    z-index: 1;
+}
+
+.dev-tag {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    padding: 6px 12px;
+    border-radius: 20px;
+    color: var(--text-dim);
+    transition: all 0.3s ease;
+}
+
+.dev-tag:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+    background: rgba(74, 222, 128, 0.05);
+}
+
+.dev-redirect-btn {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--primary);
+    border-radius: 12px;
+    padding: 12px;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.dev-redirect-btn:hover {
+    background: var(--primary);
+    color: var(--bg-dark);
+}
+

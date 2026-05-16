@@ -369,7 +369,7 @@ async function fetchCanvasData() {
     elJsonOutputBlock.textContent = 'Contacting server microservices...';
     
     try {
-        const queryUrl = `/api/canvas?trackId=${currentTrackId}`;
+        const queryUrl = `${API_BASE_URL}/api/canvas?trackId=${currentTrackId}`;
         const response = await fetch(queryUrl);
         
         if (!response.ok) {
