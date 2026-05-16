@@ -35,15 +35,13 @@ body {
 /* Background Video */
 .background-video {
     position: fixed;
-    right: 0;
-    bottom: 0;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     z-index: -1;
     object-fit: cover;
-    filter: brightness(0.85); /* Increased brightness for a clearer video background */
+    filter: brightness(0.85);
 }
 
 /* Vignette Overlay */
@@ -63,27 +61,35 @@ body {
     position: fixed;
     top: 25px;
     left: 25px;
-    width: 45px;
-    height: 45px;
+    width: 48px;
+    height: 48px;
     padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 100;
+    z-index: 1000;
     cursor: pointer;
-    border-radius: 12px;
+    border-radius: 50%;
     color: white;
-    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
 .video-control-btn:hover {
-    transform: scale(1.1);
-    background: rgba(255, 255, 255, 0.15);
+    transform: scale(1.1) rotate(5deg);
+    background: rgba(255, 255, 255, 0.2);
+    border-color: var(--primary);
+    box-shadow: 0 0 20px var(--primary-glow);
 }
 
-.video-control-btn svg {
-    width: 20px;
-    height: 20px;
+.video-control-btn i, .video-control-btn svg {
+    width: 22px !important;
+    height: 22px !important;
+    display: block;
+    stroke-width: 2.5px;
 }
 
 /* Login Container */
@@ -518,69 +524,6 @@ h1 {
     padding: 20px;
 }
 
-.team-card {
-    background: var(--glass-bg);
-    backdrop-filter: blur(15px);
-    border: 1px solid var(--glass-border);
-    border-radius: 24px;
-    padding: 40px;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    cursor: pointer;
-    text-align: center;
-}
-
-.team-card:hover {
-    border-color: var(--primary);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px var(--primary-glow);
-}
-
-.card-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.team-card .profile-ring {
-    width: 150px;
-    height: 150px;
-    margin-bottom: 25px;
-    box-shadow: 0 0 15px var(--primary-glow);
-}
-
-.team-card h3 {
-    font-size: 1.5rem;
-    margin-bottom: 5px;
-}
-
-.role {
-    color: var(--primary);
-    font-weight: 500;
-    margin-bottom: 25px;
-    font-size: 0.9rem;
-    opacity: 0.8;
-}
-
-.redirect-btn {
-    width: 100%;
-    background: transparent;
-    border: 1px solid var(--primary);
-    border-radius: 12px;
-    padding: 12px;
-    color: var(--primary);
-    text-decoration: none;
-    font-weight: 600;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    transition: all 0.3s ease;
-}
-
-.redirect-btn:hover {
-    background: var(--primary);
-    color: var(--bg-dark);
-}
-
 .about-section {
     margin-top: 100px;
     padding: 40px 20px;
@@ -768,4 +711,3 @@ h1 {
     background: var(--primary);
     color: var(--bg-dark);
 }
-

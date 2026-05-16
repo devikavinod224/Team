@@ -26,12 +26,16 @@ class LoginApp {
     toggleVideo() {
         if (this.bgVideo.paused) {
             this.bgVideo.play();
+            this.videoToggle.setAttribute('data-state', 'playing');
             this.videoToggle.innerHTML = '<i data-lucide="pause"></i>';
         } else {
             this.bgVideo.pause();
+            this.videoToggle.setAttribute('data-state', 'paused');
             this.videoToggle.innerHTML = '<i data-lucide="play"></i>';
         }
-        lucide.createIcons();
+        if (window.lucide) {
+            window.lucide.createIcons();
+        }
     }
 
     async handleLogin() {
